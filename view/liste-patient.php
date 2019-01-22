@@ -41,7 +41,7 @@ include_once('../controller/controllerliste-patient.php');
                                             <li>id: <?= $patient->id ?> </li>
                                             <li>Nom: <?= $patient->lastname ?> </li>
                                             <li>Prénom: <?= $patient->firstname ?> </li>
-                                            <li> Date de naissance: <?= $patient->birthdate ?></li>
+                                            <li> Date de naissance: <?= $patient->birthdatefrench ?></li>
                                             <li>Téléphone: <?= $patient->phone ?></li>
                                             <li>Mail: <?= $patient->mail ?></li>
                                         </ul>

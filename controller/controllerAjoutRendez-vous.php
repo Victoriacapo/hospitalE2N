@@ -50,7 +50,7 @@ if (isset($_POST['sendButton'])) {
 if (isset($_POST['sendButton']) && (count($errorsArray) == 0)) {
     $Hour = date('H:i:s', strtotime($Hour));//je met en place la mise en forme de mon heure
     $RDVObj->dateHour = $date . ' ' . $Hour; // j'hydrate mon attribut dateHour avec mes variables $date concaténé avec $Hour. (on peut aussi juste attribuer une valeur)
-    $RDVObj->idPatients = $_POST['idPatients']; 
+    $RDVObj->idPatients = $_POST['idPatients']; //recupère l'id du patient selectionné lors du select dans le formulaire
     $newRDV = $RDVObj ->ajoutRDV();
     
     $showForm = false; // ma variable return false donc cache mon formulaire remplie.

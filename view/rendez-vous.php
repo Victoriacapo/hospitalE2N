@@ -19,19 +19,19 @@ include_once('../controller/controllerRendez-vous.php');
         <h1 id="title">Modification RDV</h1>
 
         <div class="container-fluid profilForm">
-            
+
             <?php
             foreach ($rdvParPatient as $rendez) {
                 ?>
-            <p><?=$rendez->lastname ?>  <?=$rendez->firstname ?></p>
-           
+                <p><?= $rendez->lastname ?>  <?= $rendez->firstname ?></p>
+
                 <form method="POST" action="">
                     <p><label for="date">Date de RDV:</label>
                         <input type="date" name="date" value="<?= isset($_POST['date']) ? $_POST['date'] : $rendez->date ?>" />
                         <span class="error"><?= isset($errorsArray['date']) ? $errorsArray['date'] : ''; ?></span></p>
 
                     <p><label for="time">Heure de RDV:</label>
-                        <input type="time" name="Hour" value="<?= isset($_POST['time']) ? $_POST['time'] : $rendez->time ?>"/>
+                        <input type="time" name="time" value="<?= isset($_POST['time']) ? $_POST['time'] : $rendez->time ?>"/>
                         <span class="error"><?= isset($errorsArray['time']) ? $errorsArray['time'] : ''; ?></span></p>
 
                     <input id="button" type="submit" class="modif" name="modif" value="modifier" />

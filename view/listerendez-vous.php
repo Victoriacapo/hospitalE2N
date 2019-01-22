@@ -40,12 +40,13 @@ include_once('../controller/controllerlisterendez-vous.php');
                             </a>
                             <div class="collapse" id="collapseExample<?= $dateheureRDV->id ?>">
                                 <ul>
-                                    <li>date: <?= $dateheureRDV->dateHour ?> </li>
+                                    <li>date: <?= $dateheureRDV->date ?> </li>
+                                    <li>Heure: <?= $dateheureRDV->time ?> </li>
                                 </ul>
                             </div>
                              <button class="btn btn-primary" onclick="(window.location = 'rendez-vous.php?id=<?= $dateheureRDV->id ?>')">Modifier</button>
                         </td>
-                        <td><?= $dateheureRDV->birthdate ?></td>
+                        <td><?= $dateheureRDV->birthdatefrench ?></td>
                         <td><?= $dateheureRDV->phone ?></td>
                         <td><?= $dateheureRDV->mail ?></td>
                     </tr>

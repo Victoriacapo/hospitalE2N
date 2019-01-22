@@ -9,35 +9,50 @@ $RDVObj->idPatients = $_GET['id'];
 $rdvParPatient = $RDVObj->RDVbyID();
 
 
+if (isset($_GET['id'])) { //recupere l'id, verifie si présent ds la base de donnée, et effectue la requête
+    $RDVObj->id = $_GET['id'];
+    $rdvParPatient = $RDVObj->RDVbyID(); //
+    if ($rdvParPatient === FALSE) {
+        $ifIdexist = FALSE;
+    } else {
+        $ifIdexist = TRUE;
+    }
+}
+
 //on effectue toutes les verifications sur le formulaire
 $errorsArray = []; // on déclare un tableau errorsArray qui contiendra les messages d'erreurs
 // on met en place les regex
-$regexDate = '/^[a-zA-ZÄ-ÿ-]+$/';
-$regexTime = '/^[a-z0-9.-]+@[a-z0-9.-]+.[a-z]{2,6}$/';
+$regexDate = '/^[0-9]{8}+$/';
+$regexTime = '/(([0-1]){1,}([0-9]{1,})|(2[0-3]))(:)([0-5]{1}[0-9]{1})/'; //regex pr l'heure
 
 
 
 if (isset($_POST['date'])) { // recherche donnée input 
-    $profilObj->date = htmlspecialchars($_POST['date']); // declaration variable qui contient function htmlspe(qui traite données saisie ds le champs )
+    $date = htmlspecialchars($_POST['date']); // declaration variable qui contient function htmlspe(qui traite données saisie ds le champs )
     // on test si regex n'est pas bonne
-    if (!preg_match($regexName, $profilObj->date)) {//le preg_match permet de tester la regex sur ma variable 
-        $errorsArray['date'] = 'Veuillez inscrire une date conforme.';
-    }
+   
     // on test si c'est vide
-    if (empty($profilObj->date)) {
+    if (empty($date)) {
         $errorsArray['date'] = 'Veuillez saisir une date pour continuer';
     }
 }
 
-if (isset($_POST['firstname'])) { // recherche donnée input 
-    $profilObj->firstname = htmlspecialchars($_POST['firstname']); // declaration variable qui contient function htmlspe(qui traite données saisie ds le champs )
+if (isset($_POST['time'])) { // recherche donnée input 
+    $time = htmlspecialchars($_POST['time']); // declaration variable qui contient function htmlspe(qui traite données saisie ds le champs )
     // on test si regex n'est pas bonne
-    if (!preg_match($regexName, $profilObj->firstname)) {//le preg_match permet de tester la regex sur ma variable 
-        $errorsArray['firstname'] = 'Veuillez inscrire un prénom conforme. ex:John';
+    if (!preg_match($regexTime, $time)) {//le preg_match permet de tester la regex sur ma variable 
+        $errorsArray['time'] = 'Veuillez inscrire une heure conforme.';
     }
     // on test si c'est vide
-    if (empty($profilObj->lastname)) {
-        $errorsArray['lastname'] = 'Veuillez saisir un nom pour continuer';
+    if (empty($time)) {
+        $errorsArray['time'] = 'Veuillez saisir une heure pour continuer';
     }
+}
+
+if (isset($_POST['modif']) && (count($errorsArray) == 0)) {
+    $time = date('H:i:s', strtotime($time));
+    $RDVObj->dateHour = $date . ' ' . $time;
+    $RDVObj->modifRDV(); // execute ma requete presente dans mon modelpatient
+    echo 'La modification a bien été effectué';
 }
 ?>
