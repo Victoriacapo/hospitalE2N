@@ -25,22 +25,37 @@ class Patients extends database {//creation class client qui heriteras de la cla
         $addPatient->bindValue(':mail', $this->mail, PDO::PARAM_STR);
         return $addPatient->execute();
     }
-
+    
+    /**
+     * Fonction permettant d'afficher les patients
+     * @return Execute Query SELECT 
+     * 
+     */
     public function showPatient() {   // correction autre possibilite: SELECT lastName, firstName, birthDate, IF(card = 1, "oui", "non") AS card, cardNumber FROM clients;
         $response = $this->database->query('SELECT `id`,`lastname`, `firstname`, `birthdate`, `phone`, `mail` FROM `patients`');
         $data = $response->fetchAll(PDO::FETCH_OBJ);
         return $data; //la fonction retourne data.
     }
-
+    
+/**
+     * Fonction permettant d'afficher un profil de patient
+     * @return Execute Query SELECT 
+     * 
+     */
     public function profilPatient() {   // correction autre possibilite: SELECT lastName, firstName, birthDate, IF(card = 1, "oui", "non") AS card, cardNumber FROM clients;
         $query = 'SELECT * FROM `patients` WHERE `id`=:id';
         $afficherProfil = $this->database->prepare($query);
-        $afficherProfil->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $afficherProfil->bindValue(':id', $this->id, PDO::PARAM_INT); //recupere l'id
         $afficherProfil->execute();
         $patientprofil = $afficherProfil->fetch(PDO::FETCH_OBJ);
         return $patientprofil;
     }
 
+    /**
+     * Fonction permettant d'afficher les patients
+     * @return Execute Query UPDATE 
+     * 
+     */
     public function modifPatient() {
         //variable query stocke ma requete pour inserer les donnee de mon formulaire
         $query = 'UPDATE `patients` SET `lastname`= :lastname, `firstname`=:firstname, `birthdate`= :birthdate, `phone`= :phone, `mail`= :mail WHERE `id`= :id'; //:lastname = marqueur nominatif

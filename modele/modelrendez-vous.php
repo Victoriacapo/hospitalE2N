@@ -1,30 +1,58 @@
+
 <?php
 
-class appointments extends database {//creation class client qui heriteras de la class database cree ds la page modelbdd
+class Appointments extends database {//creation class client qui heriteras de la class database cree ds la page modelbdd
 
     public $id; // attribué des attributs, correspond aux colonne de ma table 
-    public $lastname;
-    public $firstname;
-    public $birthdate;
-    public $phone;
-    public $mail;
+    public $dateHour;
+    public $idPatients;
 
     /**
-     * Fonction permettant de rajouter un patient
+     * Fonction permettant de rajouter un RDV
      * @return Execute Query INSERT INTO
      * 
      */
     public function ajoutRDV() {
         //variable query stocke ma requete pour inserer les donnee de mon formulaire
-        $query = 'INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`) VALUES(:lastname, :firstname, :birthdate, :phone, :mail)'; //:lastname = marqueur nominatif
-        $addPatient = $this->database->prepare($query); //connexion database puis prepare la requete
-        $addPatient->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
-        $addPatient->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
-        $addPatient->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
-        $addPatient->bindValue(':phone', $this->phone, PDO::PARAM_STR);
-        $addPatient->bindValue(':mail', $this->mail, PDO::PARAM_STR);
-        return $addPatient->execute();
+        $query = 'INSERT INTO `appointments` (`dateHour`, `idPatients`) VALUES(:dateHour, :idPatients)'; //:lastname = marqueur nominatif
+        $addRDV = $this->database->prepare($query); //connexion database puis prepare la requete
+        $addRDV->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
+        $addRDV->bindValue(':idPatients', $this->idPatients, PDO::PARAM_INT);
+        return $addRDV->execute();
     }
-
-   
+/**
+     * Fonction permettant d'afficher les RDV
+     * @return Execute Query SELECT 
+     * 
+     */
+    public function showRDV() {   
+        $response = $this->database->query('SELECT *, '
+                . 'DATE_FORMAT(dateHour, \'%Y-%m-%d\') AS date,'
+                . 'DATE_FORMAT(dateHour, \'%H:%i\') AS time '
+                . 'FROM `appointments` '
+                . 'INNER JOIN `patients` '
+                . 'ON appointments.idPatients = patients.id');
+               // . 'ORDER BY dateHour ');
+        $data = $response->fetchAll(PDO::FETCH_OBJ);
+        return $data; //la fonction retourne data.
+    }
+    /**
+     * Fonction permettant d'afficher un profil de patient
+     * @return Execute Query SELECT 
+     * 
+     */
+    public function RDVbyID() {
+        $query = 'SELECT *,' //dateHour concatene 2 valeurs qui sont la date et l'heure, je les sépare ds la requête de la façon qui suit:
+                . ' DATE_FORMAT(dateHour, \'%Y-%m-%d\') AS date,' //renvoie dateHour au format %Y-%m-%d pr la date
+                . ' DATE_FORMAT(dateHour, \'%H:%i\') AS time' //renvoie dateHour au format %H:%i  pr l'heure
+                . ' FROM appointments'
+                . ' INNER JOIN `patients`' //jointure 
+                . ' ON appointments.idPatients = patients.id'
+                . ' WHERE `idPatients` = :idPatients';
+        $afficherRDV = $this->database->prepare($query);
+        $afficherRDV->bindValue(':idPatients', $this->idPatients, PDO::PARAM_INT); //recupere l'id
+        $afficherRDV->execute();
+        $resultRDV = $afficherRDV->fetchAll(PDO::FETCH_OBJ);
+        return $resultRDV;
+    }
 }

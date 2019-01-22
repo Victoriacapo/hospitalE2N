@@ -32,13 +32,8 @@ include_once('../controller/controllerliste-patient.php');
                                     <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?= $patient->id ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
                                         Profil
                                     </a>
-                                    <button class="btn btn-primary" onclick="(window.location = 'profil-patient.php?id=<?= $patient->id; ?>')">profilpge</button>
-                                    <button class="btn btn-primary" onclick="(window.location = 'modification-patient.php')">Modifier</button>
+                                    <button class="btn btn-primary" onclick="(window.location = 'profil-patient.php?id=<?= $patient->id; ?>')">Modifier</button>
                                 </p>
-
-                                <form method="post" action="">
-                                    <input class="btn btn-primary" type="submit" name="delete" value="supprimer"/>
-                                </form>
 
                                 <div class="collapse" id="collapseExample<?= $patient->id ?>">
                                     <div>
@@ -51,7 +46,6 @@ include_once('../controller/controllerliste-patient.php');
                                             <li>Mail: <?= $patient->mail ?></li>
                                         </ul>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

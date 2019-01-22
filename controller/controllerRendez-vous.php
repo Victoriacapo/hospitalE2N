@@ -1,79 +1,43 @@
 <?php
+
 require '../modele/modelbdd.php'; //appel des modèles
 require '../modele/modelrendez-vous.php';
+require '../modele/modelpatient.php';
 
-$patientObj = new appointments(); //instancie un nouvel objet
- 
+$RDVObj = new Appointments(); //instancie un nouvel objet
+$RDVObj->idPatients = $_GET['id'];
+$rdvParPatient = $RDVObj->RDVbyID();
+
+
 //on effectue toutes les verifications sur le formulaire
-$errorsArray = [];// on déclare un tableau errorsArray qui contiendra les messages d'erreurs
-
+$errorsArray = []; // on déclare un tableau errorsArray qui contiendra les messages d'erreurs
 // on met en place les regex
-$regexName = '/^[a-zA-ZÄ-ÿ-]+$/';
-$regexEmail = '/^[a-z0-9.-]+@[a-z0-9.-]+.[a-z]{2,6}$/';
-$regexPhone = '/^[0-9]{10}+$/';
+$regexDate = '/^[a-zA-ZÄ-ÿ-]+$/';
+$regexTime = '/^[a-z0-9.-]+@[a-z0-9.-]+.[a-z]{2,6}$/';
 
 
-if (isset($_POST['sendButton'])) {
 
-    if (isset($_POST['lastname'])) { // recherche donnée input 
-        $patientObj->lastname = htmlspecialchars($_POST['lastname']); // declaration variable qui contient function htmlspe(qui traite données saisie ds le champs )
-        // on test si regex n'est pas bonne
-        if (!preg_match($regexName, $patientObj->lastname)) {//le preg_match permet de tester la regex sur ma variable 
-            $errorsArray['lastname'] = 'Veuillez inscrire un nom conforme';
-        }
-        // on test si c'est vide
-        if (empty($patientObj->lastname)) {
-            $errorsArray['lastname'] = 'Veuillez saisir un nom pour continuer';
-        }
+if (isset($_POST['date'])) { // recherche donnée input 
+    $profilObj->date = htmlspecialchars($_POST['date']); // declaration variable qui contient function htmlspe(qui traite données saisie ds le champs )
+    // on test si regex n'est pas bonne
+    if (!preg_match($regexName, $profilObj->date)) {//le preg_match permet de tester la regex sur ma variable 
+        $errorsArray['date'] = 'Veuillez inscrire une date conforme.';
     }
-    if (isset($_POST['firstname'])) { // recherche donnée input 
-        $patientObj->firstname = htmlspecialchars($_POST['firstname']); // declaration variable qui contient function htmlspe(qui traite données saisie ds le champs )
-        // on test si regex n'est pas bonne
-        if (!preg_match($regexName, $patientObj->firstname )) {//le preg_match permet de tester la regex sur ma variable 
-            $errorsArray['firstname'] = 'Veuillez inscrire un prénom conforme';
-        }
-        // on test si c'est vide
-        if (empty($patientObj->firstname )) {
-            $errorsArray['firstname'] = 'Veuillez saisir un prénom pour continuer';
-        }
-    }
-    
-    if (isset($_POST['birthdate'])) {
-        $patientObj->birthdate = htmlspecialchars($_POST['birthdate']);
-        if (empty($patientObj->birthdate)) {
-            $errorsArray['birthdate'] = 'Veuillez saisir une date de naissance pour continuer';
-        }
-    }
-
-    if (isset($_POST['phone'])) { // recherche donnée input pseudo
-        $patientObj->phone = htmlspecialchars($_POST['phone']); // declaration variable qui contient function htmlspe(qui traite données saisie ds le champs )
-        // on test si regex n'est pas bonne
-        if (!preg_match($regexPhone, $patientObj->phone)) {//le preg_match permet de tester la regex sur ma variable 
-            $errorsArray['phone'] = 'Veuillez inscrire un téléphone conforme';
-        }
-        // on test si c'est vide
-        if (empty($patientObj->phone)) {
-            $errorsArray['phone'] = 'Veuillez saisir un téléphone pour continuer';
-        }
-    }
-    if (isset($_POST['mail'])) { // recherche donnée input pseudo
-        $patientObj->mail = htmlspecialchars($_POST['mail']); // declaration variable qui contient function htmlspe(qui traite données saisie ds le champs )
-        // on test si regex n'est pas bonne
-        if (!preg_match($regexEmail, $patientObj->mail)) {//le preg_match permet de tester la regex sur ma variable 
-            $errorsArray['mail'] = 'Veuillez inscrire un mail conforme';
-        }
-        // on test si c'est vide
-        if (empty($patientObj->mail)) {
-            $errorsArray['mail'] = 'Veuillez saisir un mail pour continuer';
-        }
+    // on test si c'est vide
+    if (empty($profilObj->date)) {
+        $errorsArray['date'] = 'Veuillez saisir une date pour continuer';
     }
 }
-//Fin verification formulaire
 
-
-
-
-
-
-
+if (isset($_POST['firstname'])) { // recherche donnée input 
+    $profilObj->firstname = htmlspecialchars($_POST['firstname']); // declaration variable qui contient function htmlspe(qui traite données saisie ds le champs )
+    // on test si regex n'est pas bonne
+    if (!preg_match($regexName, $profilObj->firstname)) {//le preg_match permet de tester la regex sur ma variable 
+        $errorsArray['firstname'] = 'Veuillez inscrire un prénom conforme. ex:John';
+    }
+    // on test si c'est vide
+    if (empty($profilObj->lastname)) {
+        $errorsArray['lastname'] = 'Veuillez saisir un nom pour continuer';
+    }
+}
 ?>

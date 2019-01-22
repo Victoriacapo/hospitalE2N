@@ -19,7 +19,10 @@
                     <button class="homeButton" onclick="(window.location = 'view/liste-patient.php')">Afficher Patient</button> <!--redirection php vers une autre page--> 
                 </div>
                 <div class="col-md-12">
-                    <button class="homeButton" onclick="(window.location = 'view/ajout-rendezvous.php')">ajout RDV</button> <!--redirection php vers une autre page--> 
+                    <button class="homeButton" onclick="(window.location = 'view/ajout-rendezvous.php')">Ajout RDV</button> <!--redirection php vers une autre page--> 
+                </div>
+                <div class="col-md-12">
+                    <button class="homeButton" onclick="(window.location = 'view/listerendez-vous.php')">Liste RDV</button> <!--redirection php vers une autre page--> 
                 </div>
             </div>
         </div>
