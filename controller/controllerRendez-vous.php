@@ -5,8 +5,8 @@ require '../modele/modelrendez-vous.php';
 require '../modele/modelpatient.php';
 
 $RDVObj = new Appointments(); //instancie un nouvel objet
-$RDVObj->idPatients = $_GET['id'];
-$rdvParPatient = $RDVObj->RDVbyID();
+
+
 
 
 if (isset($_GET['id'])) { //recupere l'id, verifie si présent ds la base de donnée, et effectue la requête

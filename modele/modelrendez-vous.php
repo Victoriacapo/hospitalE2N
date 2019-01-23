@@ -48,17 +48,20 @@ class Appointments extends database {//creation class client qui heriteras de la
      * 
      */
     public function RDVbyID() {
-        $query = 'SELECT *,' //dateHour concatene 2 valeurs qui sont la date et l'heure, je les sépare ds la requête de la façon qui suit:
+        $query = 'SELECT' //dateHour concatene 2 valeurs qui sont la date et l'heure, je les sépare ds la requête de la façon qui suit:
+                . ' appointments.id,'
                 . ' DATE_FORMAT(dateHour, \'%Y-%m-%d\') AS date,' //renvoie dateHour au format %Y-%m-%d pr la date
-                . ' DATE_FORMAT(dateHour, \'%H:%i\') AS time' //renvoie dateHour au format %H:%i  pr l'heure
+                . ' DATE_FORMAT(dateHour, \'%H:%i\') AS time,' //renvoie dateHour au format %H:%i  pr l'heure
+                . ' lastname,'
+                . ' firstname'
                 . ' FROM appointments'
                 . ' INNER JOIN `patients`' //jointure 
                 . ' ON appointments.idPatients = patients.id'
-                . ' WHERE `idPatients` = :idPatients';
+                . ' WHERE `appointments`.`id`= :idAppointment';
         $afficherRDV = $this->database->prepare($query);
-        $afficherRDV->bindValue(':idPatients', $this->idPatients, PDO::PARAM_INT); //recupere l'id
+        $afficherRDV->bindValue(':idAppointment', $this->id, PDO::PARAM_INT); //recupere l'id
         $afficherRDV->execute();
-        $resultRDV = $afficherRDV->fetchAll(PDO::FETCH_OBJ);
+        $resultRDV = $afficherRDV->fetch(PDO::FETCH_OBJ);
         return $resultRDV;
     }
     /**
