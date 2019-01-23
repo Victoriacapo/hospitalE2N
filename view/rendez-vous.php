@@ -12,7 +12,7 @@ include_once('../controller/controllerRendez-vous.php');
     </head>
     <body>
         <div>
-            <button id="retour" onclick="(window.location = '../index.php')">Retour</button> 
+            <button id="retour" onclick="(window.location = '../index.php')">page d'acceuil</button> 
             <button id="retour" onclick="(window.location = '../view/liste-patient.php')">liste patient</button>
             <button id="retour" onclick="(window.location = '../view/listerendez-vous.php')">liste RDV</button>
         </div>

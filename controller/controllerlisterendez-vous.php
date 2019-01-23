@@ -7,7 +7,4 @@ $RDVObj = new Appointments(); //instancie un nouvel objet
 $rdv = $RDVObj->showRDV(); //
 
 
-
-
-
 ?>

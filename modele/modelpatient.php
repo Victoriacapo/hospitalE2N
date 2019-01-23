@@ -32,7 +32,7 @@ class Patients extends database {//creation class client qui heriteras de la cla
      * 
      */
     public function showPatient() {   // correction autre possibilite: SELECT lastName, firstName, birthDate, IF(card = 1, "oui", "non") AS card, cardNumber FROM clients;
-        $response = $this->database->query('SELECT `id`,`lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS birthdatefrench, `phone`, `mail` FROM `patients`');
+        $response = $this->database->query('SELECT `id`,`lastname`, `firstname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS birthdate, `phone`, `mail` FROM `patients`');
         $data = $response->fetchAll(PDO::FETCH_OBJ);
         return $data; //la fonction retourne data.
     }
@@ -43,7 +43,7 @@ class Patients extends database {//creation class client qui heriteras de la cla
      * 
      */
     public function profilPatient() {   // correction autre possibilite: SELECT lastName, firstName, birthDate, IF(card = 1, "oui", "non") AS card, cardNumber FROM clients;
-        $query = 'SELECT *, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS birthdate FROM `patients` WHERE `id`=:id';
+        $query = 'SELECT * FROM `patients` WHERE `id`=:id';
         $afficherProfil = $this->database->prepare($query);
         $afficherProfil->bindValue(':id', $this->id, PDO::PARAM_INT); //recupere l'id
         $afficherProfil->execute();

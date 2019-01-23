@@ -12,37 +12,50 @@ include_once('../controller/controllerprofil-patient.php');
     </head>
     <body>
         <div>
-            <button id="retour" onclick="(window.location = '../index.php')">Retour</button> 
+            <button id="retour" onclick="(window.location = '../index.php')">Acceuil</button> 
             <button id="retour" onclick="(window.location = '../view/liste-patient.php')">liste patient</button>
         </div>
         <h1 id="title">Profil patients</h1>
 
         <div class="container-fluid profilForm">
-            
+
             <?php
             if (!$ifIdexist) {
                 ?>
                 <p>Le patient n'existe pas</p>
-                
+
             <?php } else {
                 ?>
                 <p><?= $modificationOK ? 'Modification effectuée' : '' ?></p>
                 <form method="POST" action="">
                     <p><label for="lastname">Nom:</label>
-                        <input  name="lastname" value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : $profil->lastname?>" />
+                        <input  name="lastname" value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : $profil->lastname ?>" />
                         <span class="error"><?= isset($errorsArray['lastname']) ? $errorsArray['lastname'] : ''; ?></span></p>
+
                     <p><label for="firstname">Prénom:</label>
-                        <input  name="firstname" value="<?= isset($_POST['firstname']) ? $_POST['firstname'] : $profil->firstname?>" />
+                        <input  name="firstname" value="<?= isset($_POST['firstname']) ? $_POST['firstname'] : $profil->firstname ?>" />
                         <span class="error"><?= isset($errorsArray['firstname']) ? $errorsArray['firstname'] : ''; ?></span></p>
+
                     <p><label for="birthdate">Date de naissance:</label>
-                        <input name="birthdate" value="<?= isset($_POST['birthdate']) ? $_POST['birthdate'] : $profil->birthdate?>" />
+                        <input name="birthdate" type="date" value="<?= isset($_POST['birthdate']) ? $_POST['birthdate'] : $profil->birthdate ?>" />
                         <span class="error"><?= isset($errorsArray['birthdate']) ? $errorsArray['birthdate'] : ''; ?></span></p>
+
                     <p><label for="phone">Téléphone:</label>
                         <input name="phone" value="<?= isset($_POST['phone']) ? $_POST['phone'] : $profil->phone ?>" />
                         <span class="error"><?= isset($errorsArray['phone']) ? $errorsArray['phone'] : ''; ?></span></p>
+
                     <p><label for="mail">mail:</label>
-                        <input name="mail" value="<?= isset($_POST['mail']) ? $_POST['mail'] :$profil->mail ?>" />
+                        <input name="mail" value="<?= isset($_POST['mail']) ? $_POST['mail'] : $profil->mail ?>" />
                         <span class="error"><?= isset($errorsArray['mail']) ? $errorsArray['mail'] : ''; ?></span></p>
+                    
+                        <p><label for="date">Date de RDV:</label>
+                            <input type="date" name="date" value="<?= isset($_POST['date']) ? $_POST['date'] : $rdvParPatient->date ?>" />
+                            <span class="error"><?= isset($errorsArray['date']) ? $errorsArray['date'] : ''; ?></span></p>
+
+                        <p><label for="time">Heure de RDV:</label>
+                            <input type="time" name="time" value="<?= isset($_POST['time']) ? $_POST['time'] : $rdvParPatient->time ?>"/>
+                            <span class="error"><?= isset($errorsArray['time']) ? $errorsArray['time'] : ''; ?></span></p>
+                  
                     <input id="button" type="submit" class="modif" name="modif" value="modifier" />
                 </form>
             <?php } ?>

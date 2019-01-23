@@ -12,9 +12,68 @@ include_once('../controller/controllerliste-patient.php');
     </head>
     <body>
         <div>
-            <button id="retour" onclick="(window.location = '../index.php')">Retour</button> <!--redirection php vers une autre page--> 
-           
+            <button id="retour" onclick="(window.location = '../index.php')">page d'acceuil</button> <!--redirection php vers une autre page--> 
+            <button id="retour" onclick="(window.location = '/view/listerendez-vous.php')">liste RDV</button>
         </div>
+        <h1 id="title">Liste patients</h1>
+        <div class="container tableauRDV">
+            <table>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th> </th>
+                    <th>Infos RDV</th>
+                </tr>
+                <?php
+                foreach ($show as $patient) {
+                    ?>
+                    <tr>
+                        <td><?= $patient->lastname ?></td>
+                        <td><?= $patient->firstname ?></td>
+                        <td>
+                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?= $patient->id ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Profil
+                            </a>
+                            <button class="btn btn-primary" onclick="(window.location = 'profil-patient.php?id=<?= $patient->id; ?>')">Modifier</button>
+
+                            <div class="collapse" id="collapseExample<?= $patient->id ?>">
+                                <ul>
+                                    <li>id: <?= $patient->id ?> </li>
+                                    <li>Nom: <?= $patient->lastname ?> </li>
+                                    <li>Prénom: <?= $patient->firstname ?> </li>
+                                    <li>Date de naissance: <?= $patient->birthdate ?></li>
+                                    <li>Téléphone: <?= $patient->phone ?></li>
+                                    <li>Mail: <?= $patient->mail ?></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExampleok<?= $patient->id ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                infos RDV
+                            </a>
+                            <div class="collapse" id="collapseExampleok<?= $patient->id ?>">
+                                <?php
+                                foreach ($rdvParPatient as $rdvshow) {
+                                    ?>
+                                    <ul>
+                                        <li>date: <?= $rdvshow->date ?> </li>
+                                        <li>heure: <?= $rdvshow->time ?> </li>
+                                    </ul>
+                                    <?php
+                                }
+                                ?>
+
+                            </div>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+            </table>
+        </div>
+
+
+
         <h1 id="title">Liste patients</h1>
         <div class="container">
             <div class="row">
@@ -34,14 +93,13 @@ include_once('../controller/controllerliste-patient.php');
                                     </a>
                                     <button class="btn btn-primary" onclick="(window.location = 'profil-patient.php?id=<?= $patient->id; ?>')">Modifier</button>
                                 </p>
-
                                 <div class="collapse" id="collapseExample<?= $patient->id ?>">
                                     <div>
                                         <ul>
                                             <li>id: <?= $patient->id ?> </li>
                                             <li>Nom: <?= $patient->lastname ?> </li>
                                             <li>Prénom: <?= $patient->firstname ?> </li>
-                                            <li> Date de naissance: <?= $patient->birthdatefrench ?></li>
+                                            <li> Date de naissance: <?= $patient->birthdate ?></li>
                                             <li>Téléphone: <?= $patient->phone ?></li>
                                             <li>Mail: <?= $patient->mail ?></li>
                                         </ul>

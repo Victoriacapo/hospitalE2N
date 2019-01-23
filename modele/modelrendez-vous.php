@@ -26,9 +26,14 @@ class Appointments extends database {//creation class client qui heriteras de la
      * 
      */
     public function showRDV() {   
-        $response = $this->database->query('SELECT *, '
-                . 'DATE_FORMAT(dateHour, \'%d/%m/%Y\') AS date,' //j'indique comment je veux qu'il affiche la date en m'affichant le dateHour
+        $response = $this->database->query('SELECT '
+                . 'appointments.id, '
+                . 'DATE_FORMAT(dateHour, \'%d/%m/%Y\') AS date, ' //j'indique comment je veux qu'il affiche la date en m'affichant le dateHour
                 . 'DATE_FORMAT(dateHour, \'%H:%i\') AS time, ' //j'indique comment je veux qu'il affiche l'heure
+                . 'lastname, '
+                . 'firstname, '
+                . 'phone, '
+                . 'mail, '
                 . 'DATE_FORMAT(birthdate, \'%d/%m/%Y\') AS birthdatefrench '
                 . 'FROM `appointments` '
                 . 'INNER JOIN `patients` '

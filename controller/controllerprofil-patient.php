@@ -1,14 +1,15 @@
 <?php
+
 require '../modele/modelbdd.php'; //appel des modèles
 require '../modele/modelpatient.php';
+require '../modele/modelrendez-vous.php';
 
 $profilObj = new Patients(); //instancie un nouvel objet
+$RDVObj = new Appointments();
+$rdvParPatient = $RDVObj->RDVbyID();
 $ifIdexist = FALSE;
-$modificationOK = FALSE;//booleen qui permet l'affichage du message d'erreur
-//if (isset($_GET['id'])) {   //permet de recuperer l'id et d'effectuer la requêt,e sans verifier si l'id est présent ds la base de donnée.
-//    $profilObj->id = $_GET['id']; //'attribut on donne a l'attribut Id la valeur du GET
-//    $profil = $profilObj->profilPatient(); //
-//}
+$modificationOK = FALSE; //booleen qui permet l'affichage du message d'erreur
+
 
 if (isset($_GET['id'])) { //recupere l'id, verifie si présent ds la base de donnée, et effectue la requête
     $profilObj->id = $_GET['id'];
@@ -19,6 +20,13 @@ if (isset($_GET['id'])) { //recupere l'id, verifie si présent ds la base de don
         $ifIdexist = TRUE;
     }
 }
+if (isset($_GET['id']) && isset($_GET['idPatients'])){
+    $profilObj->id = $_GET['id'] == $RDVObj->idPatients = $_GET['idPatients'];
+    $rdvParPatient = $RDVObj->RDVbyID();
+} else {
+    echo 'le patient n\'a aucun RDV à ce jour';
+}
+
 
 //on effectue toutes les verifications sur le formulaire
 $errorsArray = []; // on déclare un tableau errorsArray qui contiendra les messages d'erreurs
@@ -73,6 +81,7 @@ if (isset($_POST['modif']) && (count($errorsArray) == 0)) {
 
     $profilObj->modifPatient(); // execute ma requete presente dans mon modelpatient
     $profil = $profilObj->profilPatient();
+    $rdvParPatient = $RDVObj->RDVbyID();
     $modificationOK = TRUE;
 }
 ?>

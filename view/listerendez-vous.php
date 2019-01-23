@@ -12,7 +12,8 @@ include_once('../controller/controllerlisterendez-vous.php');
     </head>
     <body>
         <div>
-            <button id="retour" onclick="(window.location = '../index.php')">Retour</button> <!--redirection php vers une autre page--> 
+            <button id="retour" onclick="(window.location = '../index.php')">Acceuil</button> <!--redirection php vers une autre page--> 
+            <button id="retour" onclick="(window.location = '/view/liste-patient.php')">liste patients</button>
             <div><a href="ajout-rendezvous.php" class="btn btn-primary">Prendre un nouveau RDV</a></div>
         </div>
 
@@ -20,6 +21,7 @@ include_once('../controller/controllerlisterendez-vous.php');
         <div class="container tableauRDV">
             <table>
                 <tr>
+                     <th>Nom</th>
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>RDV</th>
@@ -31,6 +33,7 @@ include_once('../controller/controllerlisterendez-vous.php');
                 foreach ($rdv as $dateheureRDV) {
                     ?>
                     <tr>
+                        <td><?= $dateheureRDV->id ?></td>
                         <td><?= $dateheureRDV->lastname ?></td>
                         <td><?= $dateheureRDV->firstname ?></td>
                         <td>Le: <?= $dateheureRDV->date ?> 
