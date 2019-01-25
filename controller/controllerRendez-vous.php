@@ -5,12 +5,12 @@ require '../modele/modelrendez-vous.php';
 require '../modele/modelpatient.php';
 
 $RDVObj = new Appointments(); //instancie un nouvel objet
-
-
+$updateOK = false;
 
 
 if (isset($_GET['id'])) { //recupere l'id, verifie si présent ds la base de donnée, et effectue la requête
     $RDVObj->id = $_GET['id'];
+    $idUpdate = $_GET['id'];
     $rdvParPatient = $RDVObj->RDVbyID(); //
     if ($rdvParPatient === FALSE) {
         $ifIdexist = FALSE;
@@ -52,7 +52,8 @@ if (isset($_POST['time'])) { // recherche donnée input
 if (isset($_POST['modif']) && (count($errorsArray) == 0)) {
     $time = date('H:i:s', strtotime($time));
     $RDVObj->dateHour = $date . ' ' . $time;
-    $RDVObj->modifRDV(); // execute ma requete presente dans mon modelpatient
-    echo 'La modification a bien été effectué';
+    $RDVObj->id = $idUpdate;
+    $RDVObj->modifRDV();// execute ma requete presente dans mon modelpatient
+    $updateOK = true;
 }
 ?>

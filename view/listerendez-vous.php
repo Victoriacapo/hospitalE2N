@@ -21,11 +21,10 @@ include_once('../controller/controllerlisterendez-vous.php');
         <div class="container tableauRDV">
             <table>
                 <tr>
-                     <th>Nom</th>
+                    <th>Nom</th>
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>RDV</th>
-                    <th>Date de naissance</th>
                     <th>Téléphone</th>
                     <th>Mail</th>
                 </tr>
@@ -37,7 +36,7 @@ include_once('../controller/controllerlisterendez-vous.php');
                         <td><?= $dateheureRDV->lastname ?></td>
                         <td><?= $dateheureRDV->firstname ?></td>
                         <td>Le: <?= $dateheureRDV->date ?> 
-                           à:  <?= $dateheureRDV->time ?>
+                            à:  <?= $dateheureRDV->time ?>
                             <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample<?= $dateheureRDV->id ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
                                 + d'infos
                             </a>
@@ -47,9 +46,9 @@ include_once('../controller/controllerlisterendez-vous.php');
                                     <li>Heure: <?= $dateheureRDV->time ?> </li>
                                 </ul>
                             </div>
-                             <button class="btn btn-primary" onclick="(window.location = 'rendez-vous.php?id=<?= $dateheureRDV->id ?>')">Modifier</button>
+                            <button class="btn btn-primary" onclick="(window.location = 'rendez-vous.php?id=<?= $dateheureRDV->id ?>')">Modifier</button>
+                            <a href="listerendez-vous.php?id=<?= $dateheureRDV->id ?>"  name="deleteRDV"><button>Supprimer le RDV</button></a>
                         </td>
-                        <td><?= $dateheureRDV->birthdatefrench ?></td>
                         <td><?= $dateheureRDV->phone ?></td>
                         <td><?= $dateheureRDV->mail ?></td>
                     </tr>

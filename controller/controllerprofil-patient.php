@@ -14,18 +14,16 @@ $modificationOK = FALSE; //booleen qui permet l'affichage du message d'erreur
 if (isset($_GET['id'])) { //recupere l'id, verifie si présent ds la base de donnée, et effectue la requête
     $profilObj->id = $_GET['id'];
     $profil = $profilObj->profilPatient(); //
+    
+    $RDVObj->idPatients = $_GET['id'];
+    $rdvsurprofil = $RDVObj->ongletRDV();
     if ($profil === FALSE) {
         $ifIdexist = FALSE;
     } else {
         $ifIdexist = TRUE;
     }
 }
-if (isset($_GET['id']) && isset($_GET['idPatients'])){
-    $profilObj->id = $_GET['id'] == $RDVObj->idPatients = $_GET['idPatients'];
-    $rdvParPatient = $RDVObj->RDVbyID();
-} else {
-    echo 'le patient n\'a aucun RDV à ce jour';
-}
+
 
 
 //on effectue toutes les verifications sur le formulaire
@@ -34,7 +32,7 @@ $errorsArray = []; // on déclare un tableau errorsArray qui contiendra les mess
 $regexName = '/^[a-zA-ZÄ-ÿ-]+$/';
 $regexEmail = '/^[a-z0-9.-]+@[a-z0-9.-]+.[a-z]{2,6}$/';
 $regexPhone = '/^[0-9]{10}+$/';
-
+$regexTime = '/(([0-1]){1,}([0-9]{1,})|(2[0-3]))(:)([0-5]{1}[0-9]{1})/'; //regex pr l'heure
 
 if (isset($_POST['lastname'])) { // recherche donnée input 
     $profilObj->lastname = htmlspecialchars($_POST['lastname']); // declaration variable qui contient function htmlspe(qui traite données saisie ds le champs )
@@ -75,6 +73,8 @@ if (isset($_POST['mail'])) { // recherche donnée input pseudo
         $errorsArray['mail'] = 'Veuillez inscrire un mail conforme';
     }
 }
+
+
 //fin verification formulaire
 //a l'appui sur le bouton modif, verifie les erreurs, effectue la requête
 if (isset($_POST['modif']) && (count($errorsArray) == 0)) {

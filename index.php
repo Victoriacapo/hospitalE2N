@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-100">
+<html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,7 +9,7 @@
             Consigne: Créer une page ajout-patient.php et y créer un formulaire permettant de créer un patient. 
             Elle doit être accessible depuis la page index.php</title>
     </head>
-    <body class="h-100">
+    <body>
         <div id="mt" class="container">
             <div class="row">
                 <div class="col-lg-12">

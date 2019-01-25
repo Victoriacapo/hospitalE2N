@@ -20,12 +20,13 @@ class Appointments extends database {//creation class client qui heriteras de la
         $addRDV->bindValue(':idPatients', $this->idPatients, PDO::PARAM_INT);
         return $addRDV->execute();
     }
-/**
+
+    /**
      * Fonction permettant d'afficher les RDV
      * @return Execute Query SELECT 
      * 
      */
-    public function showRDV() {   
+    public function showRDV() {
         $response = $this->database->query('SELECT '
                 . 'appointments.id, '
                 . 'DATE_FORMAT(dateHour, \'%d/%m/%Y\') AS date, ' //j'indique comment je veux qu'il affiche la date en m'affichant le dateHour
@@ -38,10 +39,11 @@ class Appointments extends database {//creation class client qui heriteras de la
                 . 'FROM `appointments` '
                 . 'INNER JOIN `patients` '
                 . 'ON appointments.idPatients = patients.id');
-               // . 'ORDER BY dateHour ');
+        // . 'ORDER BY dateHour ');
         $data = $response->fetchAll(PDO::FETCH_OBJ);
         return $data; //la fonction retourne data.
     }
+
     /**
      * Fonction permettant d'afficher un profil de patient
      * @return Execute Query SELECT 
@@ -64,6 +66,7 @@ class Appointments extends database {//creation class client qui heriteras de la
         $resultRDV = $afficherRDV->fetch(PDO::FETCH_OBJ);
         return $resultRDV;
     }
+
     /**
      * Fonction permettant d'afficher les patients
      * @return Execute Query UPDATE 
@@ -71,10 +74,43 @@ class Appointments extends database {//creation class client qui heriteras de la
      */
     public function modifRDV() {
         //variable query stocke ma requete pour inserer les donnee de mon formulaire
-        $query = 'UPDATE `appointments` SET `dateHour`= :dateHour WHERE `idPatients`= :idPatients'; //:dateHour = marqueur nominatif
+        $query = 'UPDATE `appointments` SET `dateHour`= :dateHour WHERE `id`= :id'; //:dateHour = marqueur nominatif
         $replaceRDV = $this->database->prepare($query); //connexion database puis prepare la requete
-        $replaceRDV->bindValue(':idPatients', $this->idPatients, PDO::PARAM_INT); //recuperation de l'attribut idPatient pr operer la modification sur la ligne du patient concerné
+        $replaceRDV->bindValue(':id', $this->id, PDO::PARAM_INT); //recuperation de l'attribut idPatient pr operer la modification sur la ligne du patient concerné
         $replaceRDV->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
         return $replaceRDV->execute();
+    }
+
+    /**
+     * Fonction permettant d'afficher un profil de patient
+     * @return Execute Query SELECT 
+     * 
+     */
+    public function ongletRDV() {
+        $query = 'SELECT '
+        . 'appointments.id, '
+        . 'patients.id, '
+        . 'DATE_FORMAT(dateHour, \'%d-%m-%Y\') AS date, '
+        . 'DATE_FORMAT(dateHour, \'%H:%i\') AS time '
+        . 'FROM `appointments` '
+        . 'INNER JOIN `patients` '
+        . 'ON appointments.idPatients = patients.id '
+        . 'WHERE patients.id = :idPatients';
+        $RDVsurprofil = $this->database->prepare($query);
+        $RDVsurprofil->bindValue(':idPatients', $this->idPatients, PDO::PARAM_STR); //recupere l'id
+        $RDVsurprofil->execute();
+        $RDVok = $RDVsurprofil->fetchAll(PDO::FETCH_OBJ);
+        return $RDVok;
+    }
+/**
+     * Fonction permettant d'afficher un profil de patient
+     * @return Execute Query DELETE 
+     * 
+     */
+    public function supprimerRDV() {
+        $query = 'DELETE FROM `appointments` WHERE `id`= :id'; 
+        $supprimeokRDV = $this->database->prepare($query); //connexion database puis prepare la requete
+        $supprimeokRDV->bindValue(':id', $this->id, PDO::PARAM_INT); //recuperation de l'attribut idPatient pr operer la modification sur la ligne du patient concerné
+        return $supprimeokRDV->execute();
     }
 }

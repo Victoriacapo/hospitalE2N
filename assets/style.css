@@ -93,15 +93,24 @@ body{
     background-color: pink;
     border: 5px solid #000;
     color: black;
-    height: 80 px;
+    height: 80px;
     width: 350px;
 }
-.profilForm{
-    color: black;
-    height: 400px;
-    width: 500px;
+.profilFormdiv{
+   
+
+}
+#formprofil{
+    margin-bottom: 25px;
+    color: white;
     border: 2px solid black;
-    background-color: rgba(40%, 30%, 150%, 0.5); 
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    background-color: black; 
+    padding-left: 25px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 /*partie listerendez-vous*/
@@ -112,7 +121,7 @@ table{
     border-top: 10px;
     color: white;
     border-collapse: collapse; /*bordure collée */
-     border: 1px solid white;
+    border: 1px solid white;
 }
 td, th{
     border: 1px solid white;
@@ -122,5 +131,27 @@ th{
     background-color: pink;
 }
 td{
-  background-color: #758aa2;
+    background-color: #758aa2;
+}
+
+/*partie RDV sous le profil*/
+.rdvok{
+    border: 2px solid black;
+     margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    background-color: black;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+.tablerdvprofil{
+    text-align: center;
+    height: 100px;
+    width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.titleRDV{
+    color: white;
+    text-align: center;
 }

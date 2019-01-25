@@ -12,7 +12,7 @@ include_once('../controller/controllerRendez-vous.php');
     </head>
     <body>
         <div>
-            <button id="retour" onclick="(window.location = '../index.php')">page d'acceuil</button> 
+            <button id="retour" onclick="(window.location = '../index.php')">Acceuil</button> 
             <button id="retour" onclick="(window.location = '../view/liste-patient.php')">liste patient</button>
             <button id="retour" onclick="(window.location = '../view/listerendez-vous.php')">liste RDV</button>
         </div>
@@ -20,11 +20,10 @@ include_once('../controller/controllerRendez-vous.php');
 
         <div class="container-fluid profilForm">
 
-            
                 <h1><?= $rdvParPatient->lastname ?>  <?= $rdvParPatient->firstname ?></h1>
                 <p>Rendez-vous : <?= $rdvParPatient->id ?></p>
 
-                <form method="POST" action="">
+                <form method="POST" action="rendez-vous.php?id=<?=$rdvParPatient->id ?>">
                     <p><label for="date">Date de RDV:</label>
                         <input type="date" name="date" value="<?= isset($_POST['date']) ? $_POST['date'] : $rdvParPatient->date ?>" />
                         <span class="error"><?= isset($errorsArray['date']) ? $errorsArray['date'] : ''; ?></span></p>
@@ -34,6 +33,7 @@ include_once('../controller/controllerRendez-vous.php');
                         <span class="error"><?= isset($errorsArray['time']) ? $errorsArray['time'] : ''; ?></span></p>
 
                     <input id="button" type="submit" class="modif" name="modif" value="modifier" />
+                    <h2><?= $updateOK ? 'MODIFICATION OK' : '' ?></h2>
                 </form>
            
         </div>
