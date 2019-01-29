@@ -70,7 +70,10 @@ body{
     -moz-border-radius: 26px 27px 26px 26px;
     border-radius: 26px 27px 26px 26px;
 }
-
+/*partie liste patient*/
+.form-inline{
+    float: right;
+}
 /*partie card profil-patient*/
 #title{
     text-align: center;
@@ -93,9 +96,10 @@ body{
     background-color: pink;
     border: 5px solid #000;
     color: black;
-    height: 80px;
+   height: auto !important;
     width: 350px;
 }
+
 .profilFormdiv{
    
 

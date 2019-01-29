@@ -21,7 +21,7 @@ include_once('../controller/controllerlisterendez-vous.php');
         <div class="container tableauRDV">
             <table>
                 <tr>
-                    <th>Nom</th>
+                    <th>id RDV</th>
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>RDV</th>
@@ -47,7 +47,7 @@ include_once('../controller/controllerlisterendez-vous.php');
                                 </ul>
                             </div>
                             <button class="btn btn-primary" onclick="(window.location = 'rendez-vous.php?id=<?= $dateheureRDV->id ?>')">Modifier</button>
-                            <a href="listerendez-vous.php?id=<?= $dateheureRDV->id ?>"  name="deleteRDV"><button>Supprimer le RDV</button></a>
+                            <a href="listerendez-vous.php?id=<?= $dateheureRDV->id ?>"  name="deleteRDV"><button class="btn btn-primary">Supprimer le RDV</button></a>
                         </td>
                         <td><?= $dateheureRDV->phone ?></td>
                         <td><?= $dateheureRDV->mail ?></td>

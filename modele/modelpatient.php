@@ -8,6 +8,7 @@ class Patients extends database {//creation class client qui heriteras de la cla
     public $birthdate;
     public $phone;
     public $mail;
+    public $search;
 
     /**
      * Fonction permettant de rajouter un patient
@@ -25,7 +26,7 @@ class Patients extends database {//creation class client qui heriteras de la cla
         $addPatient->bindValue(':mail', $this->mail, PDO::PARAM_STR);
         return $addPatient->execute();
     }
-    
+
     /**
      * Fonction permettant d'afficher les patients
      * @return Execute Query SELECT 
@@ -36,8 +37,8 @@ class Patients extends database {//creation class client qui heriteras de la cla
         $data = $response->fetchAll(PDO::FETCH_OBJ);
         return $data; //la fonction retourne data.
     }
-    
-/**
+
+    /**
      * Fonction permettant d'afficher un profil de patient
      * @return Execute Query SELECT 
      * 
@@ -67,6 +68,45 @@ class Patients extends database {//creation class client qui heriteras de la cla
         $replacePatient->bindValue(':phone', $this->phone, PDO::PARAM_STR);
         $replacePatient->bindValue(':mail', $this->mail, PDO::PARAM_STR);
         return $replacePatient->execute();
+    }
+
+    /**
+     * Fonction permettant de supprimer un patient
+     * @return Execute Query DELETE 
+     * 
+     */
+    public function supprimerPatient() {
+        $query = 'DELETE FROM `patients` WHERE `id`= :id';
+        $supprimeokPatient = $this->database->prepare($query); //connexion database puis prepare la requete
+        $supprimeokPatient->bindValue(':id', $this->id, PDO::PARAM_INT); //recuperation de l'attribut idPatient pr operer la modification sur la ligne du patient concerné
+        return $supprimeokPatient->execute();
+    }
+
+    /**
+     * Fonction permettant d'afficher un resultat pr la recherche de l'utilisateur
+     * @return Execute Query SELECT 
+     * 
+     */
+    public function searchPatient() {
+        $query = 'SELECT * FROM patients WHERE lastname LIKE :search OR firstname LIKE :search ORDER BY lastname';
+        $searchResult = $this->database->prepare($query);
+        $searchResult->bindValue(':search', '%' . $this->search . '%', PDO::PARAM_STR); //lie la valeur de l'input search, on enleve le % de devant, si on veut que la recherche commence absolument par la lettre tapé, entourer par ls %, la recherche seras +vaste, selectionneras tout les mots contenant la lettre/ syllabe tapé.
+        $searchResult->execute();
+        $unResult = $searchResult->fetchAll(PDO::FETCH_OBJ);
+        return $unResult;
+    }
+
+    /**
+     * Fonction permettant de réaliser ma pagination
+     * @return Execute Query 
+     * 
+     */
+    public function pagination() {
+        $query = 'SELECT * FROM patients ORDER BY lastname'; //Nous récupérons le contenu de la requête dans $retour_total
+        $retour_total = $this->database->prepare($query);
+        $retour_total->execute();
+        $retour_total->fetch();
+        return $retour_total->rowCount();
     }
 
 }

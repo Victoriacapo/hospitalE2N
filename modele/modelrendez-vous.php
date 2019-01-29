@@ -45,7 +45,7 @@ class Appointments extends database {//creation class client qui heriteras de la
     }
 
     /**
-     * Fonction permettant d'afficher un profil de patient
+     * Fonction permettant d'afficher les RDV par id de rdv
      * @return Execute Query SELECT 
      * 
      */
@@ -68,7 +68,7 @@ class Appointments extends database {//creation class client qui heriteras de la
     }
 
     /**
-     * Fonction permettant d'afficher les patients
+     * Fonction permettant de modifier les RDV
      * @return Execute Query UPDATE 
      * 
      */
@@ -82,7 +82,7 @@ class Appointments extends database {//creation class client qui heriteras de la
     }
 
     /**
-     * Fonction permettant d'afficher un profil de patient
+     * Fonction permettant d'afficher les RDV par patient
      * @return Execute Query SELECT 
      * 
      */
@@ -103,7 +103,7 @@ class Appointments extends database {//creation class client qui heriteras de la
         return $RDVok;
     }
 /**
-     * Fonction permettant d'afficher un profil de patient
+     * Fonction permettant de supprimer un RDV
      * @return Execute Query DELETE 
      * 
      */
@@ -113,4 +113,5 @@ class Appointments extends database {//creation class client qui heriteras de la
         $supprimeokRDV->bindValue(':id', $this->id, PDO::PARAM_INT); //recuperation de l'attribut idPatient pr operer la modification sur la ligne du patient concerné
         return $supprimeokRDV->execute();
     }
+    
 }
