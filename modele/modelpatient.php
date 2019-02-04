@@ -9,7 +9,7 @@ class Patients extends database {//creation class client qui heriteras de la cla
     public $phone;
     public $mail;
     public $search;
-
+    
     /**
      * Fonction permettant de rajouter un patient
      * @return Execute Query INSERT INTO
@@ -28,7 +28,7 @@ class Patients extends database {//creation class client qui heriteras de la cla
     }
 
     /**
-     * Fonction permettant d'afficher les patients
+     * Fonction permettant d'afficher tous les patients
      * @return Execute Query SELECT 
      * 
      */
@@ -53,7 +53,7 @@ class Patients extends database {//creation class client qui heriteras de la cla
     }
 
     /**
-     * Fonction permettant d'afficher les patients
+     * Fonction permettant de recupérer les modifications des patients
      * @return Execute Query UPDATE 
      * 
      */
@@ -81,7 +81,6 @@ class Patients extends database {//creation class client qui heriteras de la cla
         $supprimeokPatient->bindValue(':id', $this->id, PDO::PARAM_INT); //recuperation de l'attribut idPatient pr operer la modification sur la ligne du patient concerné
         return $supprimeokPatient->execute();
     }
-
     /**
      * Fonction permettant d'afficher un resultat pr la recherche de l'utilisateur
      * @return Execute Query SELECT 
@@ -95,18 +94,29 @@ class Patients extends database {//creation class client qui heriteras de la cla
         $unResult = $searchResult->fetchAll(PDO::FETCH_OBJ);
         return $unResult;
     }
-
     /**
      * Fonction permettant de réaliser ma pagination
      * @return Execute Query 
      * 
      */
     public function pagination() {
-        $query = 'SELECT * FROM patients ORDER BY lastname'; //Nous récupérons le contenu de la requête dans $retour_total
+        $query = 'SELECT * FROM patients '; //Nous récupérons le contenu de la requête dans $retour_total
         $retour_total = $this->database->prepare($query);
         $retour_total->execute();
-        $retour_total->fetch();
-        return $retour_total->rowCount();
+        $retour_total->fetchAll();
+        return $retour_total->rowCount();//rowCount() permet de me retourner le total en INT et non en STRING, le INT est nécessaire pr les opération à effectuer par la suite.
+    }
+
+    /*     * pour récupérer les messages de la page actuelle et organisé les données par page.
+     * @return Execute Query 
+     * 
+     */
+    public function patientbyPage($premiereEntree, $patientsParPage) {
+        $query = 'SELECT * FROM patients ORDER BY lastname LIMIT ' . $premiereEntree . ',' . $patientsParPage . '';
+        $retour_page = $this->database->prepare($query);
+        $retour_page->execute();
+        $pagePatient = $retour_page->fetchAll(PDO::FETCH_OBJ);
+        return $pagePatient;
     }
 
 }

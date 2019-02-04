@@ -18,8 +18,38 @@ if (isset($_GET['id'])) { //va chercher l'id  avec un $_GET, du patient recupér
 }
 
 
-//partie pour barre de recherche
+//Partie Pagination
+$patientsParPage = 6; //Nous allons afficher 5 messages par page.
+$total = $patientObj->pagination(); //retourne le total de patient que contient ma base
+//Nous allons maintenant compter le nombre de page.
+$nombreDePages = intval($total / $patientsParPage);
+var_dump($total);
+$page = $_GET['page'];
+if (isset($_GET['page'])) { // Si la variable $_GET['page'] existe...
+    $pageActuelle = ($_GET['page']);
 
+    if ($pageActuelle > $nombreDePages) { // Si la valeur de $pageActuelle (le numéro de la page) est plus grande que $nombreDePages...
+        $pageActuelle = $nombreDePages;
+    }
+} else { // Sinon
+    $pageActuelle = 1; // La page actuelle est la n°1    
+}
+
+// On calcul la première entrée à lire
+$premiereEntree = ($pageActuelle-1) * $patientsParPage; //($pageActuelle-1) car initialise les première entrées à partir de 0.
+//boucle pour la pagination
+for ($i = 1; $i <= $nombreDePages; $i++) { //On fait notre boucle
+    //On va faire notre condition
+    if ($i == $pageActuelle) { //Si il s'agit de la page actuelle...
+        echo '['.$i.']';
+    } else { //Sinon...
+        echo '<a href="liste-patient.php?page='.$i.'">'.$i.'</a>';
+    }
+}
+
+
+
+//partie pour barre de recherche
 $errorsArray = []; // on déclare un tableau errorsArray qui contiendra les messages d'erreurs
 $regexName = '/^[a-zA-ZÄ-ÿ-]+$/';
 if (isset($_POST['Ok'])) {
@@ -32,20 +62,11 @@ if (isset($_POST['Ok'])) {
     }
 }
 
-
 if (isset($_POST['Ok']) && (count($errorsArray) == 0)) {
     $patientObj->search = $_POST['search'];
     $show = $patientObj->searchPatient();
 } else {
-    $show = $patientObj->showPatient(); //affiche la liste des patients.
+    //$show = $patientObj->showPatient(); //affiche la liste des patients.
+    $show = $patientObj->patientbyPage($premiereEntree, $patientsParPage); //affiche la liste des patient par page
 }
-
-
-$messagesParPage=4; //Nous allons afficher 5 messages par page.
-
-$total = $patientObj->pagination();
-//Nous allons maintenant compter le nombre de pages.
-$nombreDePages=ceil($total/$messagesParPage);
-var_dump($nombreDePages);
-
 ?>
